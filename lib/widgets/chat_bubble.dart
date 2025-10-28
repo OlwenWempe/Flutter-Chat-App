@@ -18,7 +18,13 @@ class ChatBubble extends StatelessWidget {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
-              bottomLeft: Radius.circular(12)),
+              bottomLeft: alignment == Alignment.centerLeft
+                  ? Radius.circular(12)
+                  : Radius.circular(0),
+              bottomRight: alignment == Alignment.centerRight
+                  ? Radius.circular(12)
+                  : Radius.circular(0),
+          ),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
