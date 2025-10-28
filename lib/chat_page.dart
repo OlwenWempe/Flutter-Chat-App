@@ -1,7 +1,10 @@
+import 'package:chat_app_v2/widgets/chat_bubble.dart';
+import 'package:chat_app_v2/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key) ;
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,98 +21,22 @@ class ChatPage extends StatelessWidget {
              icon: Icon(Icons.logout_rounded))
        ],
       ),
-      body: ListView(
+      body: Column(
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              margin: EdgeInsets.all(50),
-              padding: EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: Colors.grey[700],
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
-                    bottomLeft: Radius.circular(12)),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Hi, this is your message!',
-                    style: TextStyle(fontSize: 20,
-                        color: Colors.white),
-                  ),
-                  Image.network('https://3009709.youcanlearnit.net/Alien_LIL_131338.png', height: 100,)
-                ],
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              margin: EdgeInsets.all(50),
-              padding: EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: Colors.grey[700],
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
-                    bottomLeft: Radius.circular(12)),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Hi, this is your message!',
-                    style: TextStyle(fontSize: 20,
-                        color: Colors.white),
-                  ),
-                  Image.network('https://3009709.youcanlearnit.net/Alien_LIL_131338.png', height: 100,)
-                ],
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              margin: EdgeInsets.all(50),
-              padding: EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: Colors.grey[700],
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
-                    bottomLeft: Radius.circular(12)),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Hi, this is your message!',
-                    style: TextStyle(fontSize: 20,
-                        color: Colors.white),
-                  ),
-                  Image.network('https://3009709.youcanlearnit.net/Alien_LIL_131338.png', height: 100,)
-                ],
-              ),
-            ),
-          ),
-
-          Container(
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Expanded(
+            child: ListView(
               children: [
-                IconButton(onPressed: (){},
-                    icon: Icon(Icons.add_outlined, color: Colors.white,)),
-                IconButton(onPressed: (){},
-                    icon: Icon(Icons.send, color: Colors.white,)),
+                ChatBubble(alignment: Alignment.centerRight, message: 'Hello'),
+                ChatBubble(alignment: Alignment.centerLeft, message: 'Hi'),
+                ChatBubble(alignment: Alignment.centerRight, message: 'How are you?'),
+                ChatBubble(alignment: Alignment.centerLeft, message: 'I am fine, thank you'),
+                ChatBubble(alignment: Alignment.centerRight, message: 'What about you?'),
+                ChatBubble(alignment: Alignment.centerLeft, message: 'I am fine too'),
+
               ],
             ),
-
-          )
+          ),
+          ChatInput(),
         ],
       ),
     );
