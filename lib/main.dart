@@ -22,6 +22,7 @@ class ChatApp extends StatelessWidget {
         ),
       ),
       home: LoginPage(),
+      routes: {'/chat': (context) => ChatPage()},
     );
   }
 }

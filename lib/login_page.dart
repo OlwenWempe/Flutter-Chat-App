@@ -1,28 +1,34 @@
+import 'package:chat_app_v2/utils/brand_color.dart';
+import 'package:chat_app_v2/utils/spaces.dart';
+import 'package:chat_app_v2/widgets/login_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_buttons/social_media_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'chat_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final Uri _url = Uri.parse('https://owempe.eu');
 
   void loginUser(context) {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       print('username = ' + userNameController.text);
       print('password = ' + passwordController.text);
-      Navigator.push(
+      Navigator.pushReplacementNamed(
         context,
-        MaterialPageRoute(builder: (context) => ChatPage()),
+        '/chat',
+        arguments: userNameController.text,
       );
       print('Login successful');
     } else {
       print('Login failed');
     }
   }
-
-  final userNameController = TextEditingController();
-  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,71 +59,87 @@ class LoginPage extends StatelessWidget {
                   color: Colors.blueGrey,
                 ),
               ),
-              Image.network(
-                'https://3009709.youcanlearnit.net/Alien_LIL_131338.png',
-                height: 100,
-              ),
+              Image.asset('assets/banner_image.png', height: 200),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
+                    LoginTextField(
+                      controller: userNameController,
+                      hintText: "Enter your username",
                       validator: (value) {
                         if (value != null && value.isEmpty) {
-                          return 'Username cannot be empty';
+                          return 'Please enter a username';
                         } else if (value != null &&
                             value.isNotEmpty &&
                             value.length < 5) {
-                          return 'Username must be at least 5 characters long';
+                          return "Username must be at least 5 characters long";
                         }
                         return null;
                       },
-                      controller: userNameController,
-                      decoration: InputDecoration(
-                        hintText: 'Add your username',
-                        hintStyle: TextStyle(color: Colors.blueGrey),
-                        labelText: 'Username',
-                        border: OutlineInputBorder(),
+                    ),
+                    verticalSpacing(24),
+                    LoginTextField(
+                      controller: passwordController,
+                      hintText: 'Type your password',
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return 'Please enter a password';
+                        }
+                        return null;
+                      },
+                      obscureText: true,
+                    ),
+                    verticalSpacing(24),
+                    ElevatedButton(
+                      onPressed: () {
+                        loginUser(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: BrandColor.primaryColor,
+                        //Colors.deepPurple
+                      ),
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 24),
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: 'Type your password',
-                        hintStyle: TextStyle(color: Colors.blueGrey),
-                        labelText: 'Password',
-                        border: OutlineInputBorder(),
+                    GestureDetector(
+                      onTap: () async {
+                        print('Navigated to browser');
+                        if (!await launchUrl(_url)) {
+                          throw Exception('Could not launch $_url');
+                        }
+                      },
+                      child: Column(
+                        children: [Text('Find us on'), Text('$_url')],
                       ),
+                    ),
+                    verticalSpacing(24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SocialMediaButton.linkedin(
+                          color: Colors.blue,
+                          url:
+                              "https://www.linkedin.com/in/olwen-wempe-6171b4108/",
+                        ),
+                        SocialMediaButton.github(
+                          url:
+                              "https://https://github.com/OlwenWempe/Flutter-Chat-App",
+                        ),
+                        SocialMediaButton.instagram(
+                          color: Colors.pink,
+                          url: "https://www.instagram.com/",
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {
-                  loginUser(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                ),
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  print('Navigated to browser');
-                },
-                child: Column(
-                  children: [Text('Find us on'), Text('owempe.eu')],
                 ),
               ),
             ],
